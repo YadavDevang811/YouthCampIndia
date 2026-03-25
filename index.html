@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WanderLust — Explore India's Wild Beauty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep: #0d4a2e;
+    --green-mid:  #1a6b42;
+    --green-light:#2d9158;
+    --green-pale: #c8e6c9;
+    --blue-deep:  #0b3954;
+    --blue-mid:   #1565a8;
+    --blue-light: #2196f3;
+    --blue-pale:  #bbdefb;
+    --white:      #ffffff;
+    --cream:      #f7fdf9;
+    --text-dark:  #0d2318;
+    --text-mid:   #2e5240;
+    --text-light: #6b9e80;
+    --border:     rgba(13,74,46,0.12);
+    --shadow-sm:  0 2px 12px rgba(13,74,46,0.10);
+    --shadow-md:  0 8px 32px rgba(13,74,46,0.15);
+    --shadow-lg:  0 20px 60px rgba(13,74,46,0.18);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 5%;
+    background: rgba(13,74,46,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    transition: background 0.3s;
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--white);
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: #6ee9a4; }
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.82);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: #6ee9a4; }
+  .nav-cta {
+    background: var(--blue-light);
+    color: var(--white) !important;
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: #1976d2 !important; color: var(--white) !important; }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    background:
+      linear-gradient(160deg, rgba(13,74,46,0.85) 0%, rgba(11,57,84,0.70) 60%, rgba(21,101,168,0.55) 100%),
+      url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1600') center/cover no-repeat;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 0 5%;
+    padding-top: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    padding: 0.35rem 1rem;
+    color: #a7f3c6;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.5rem;
+    width: fit-content;
+  }
+  .hero-badge::before { content:''; width:7px; height:7px; background:#6ee9a4; border-radius:50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.4)} }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    color: var(--white);
+    line-height: 1.08;
+    max-width: 680px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em { color: #6ee9a4; font-style: italic; }
+  .hero p {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.78);
+    max-width: 500px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+  .hero-buttons {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--green-light);
+    color: var(--white);
+    padding: 0.85rem 2rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: var(--green-mid); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    padding: 0.85rem 2rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1.5px solid rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-outline:hover { border-color: #6ee9a4; background: rgba(110,233,164,0.08); transform: translateY(-2px); }
+
+  .hero-stats {
+    position: absolute; bottom: 3rem; left: 5%; right: 5%;
+    display: flex; gap: 2rem;
+    background: rgba(255,255,255,0.09);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.13);
+    border-radius: 16px;
+    padding: 1.5rem 2.5rem;
+    max-width: 640px;
+  }
+  .stat { flex: 1; }
+  .stat strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #6ee9a4;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat span { font-size: 0.8rem; color: rgba(255,255,255,0.65); font-weight: 400; }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 5rem 5%; }
+  .section-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--green-mid);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+  .section-label::before { content:''; width:24px; height:2px; background: var(--green-light); border-radius:2px; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    color: var(--green-deep);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .section-sub {
+    font-size: 1rem;
+    color: var(--text-light);
+    max-width: 520px;
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 3rem;
+  }
+
+  /* ─── PACKAGES GRID ─── */
+  #packages { background: var(--white); }
+  .tabs {
+    display: flex; gap: 0.5rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .tab {
+    padding: 0.55rem 1.3rem;
+    border-radius: 50px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--text-mid);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab:hover { border-color: var(--green-light); color: var(--green-light); }
+  .tab.active {
+    background: var(--green-deep);
+    border-color: var(--green-deep);
+    color: var(--white);
+  }
+  .packages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .pkg-card {
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--white);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.25s, box-shadow 0.25s;
+    cursor: pointer;
+    display: none;
+  }
+  .pkg-card.visible { display: block; }
+  .pkg-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+  .pkg-img {
+    height: 210px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  .pkg-badge {
+    position: absolute; top: 14px; left: 14px;
+    background: rgba(13,74,46,0.88);
+    color: #a7f3c6;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 50px;
+  }
+  .pkg-badge.govt { background: rgba(11,57,84,0.9); color: #90caf9; }
+  .pkg-fav {
+    position: absolute; top: 14px; right: 14px;
+    width: 34px; height: 34px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem;
+    transition: transform 0.2s;
+  }
+  .pkg-fav:hover { transform: scale(1.15); }
+  .pkg-body { padding: 1.2rem 1.4rem 1.4rem; }
+  .pkg-location {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    margin-bottom: 5px;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .pkg-location::before { content:'📍'; font-size: 0.75rem; }
+  .pkg-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--green-deep);
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+  }
+  .pkg-meta {
+    display: flex; gap: 1rem; margin-bottom: 1rem;
+  }
+  .pkg-meta span {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .pkg-price-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .pkg-price {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--green-deep);
+  }
+  .pkg-price small { font-size: 0.75rem; font-weight: 400; color: var(--text-light); }
+  .btn-book {
+    background: var(--green-deep);
+    color: var(--white);
+    padding: 0.5rem 1.1rem;
+    border-radius: 50px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-book:hover { background: var(--green-mid); }
+
+  /* ─── GOVT CAMPS ─── */
+  #govtcamps { background: var(--cream); }
+  .camps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .camp-card {
+    background: var(--white);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    padding: 1.4rem;
+    display: flex; flex-direction: column; gap: 0.8rem;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .camp-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  .camp-icon {
+    width: 48px; height: 48px;
+    background: var(--blue-pale);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+  }
+  .camp-tag {
+    display: inline-block;
+    background: var(--blue-pale);
+    color: var(--blue-deep);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 50px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    width: fit-content;
+  }
+  .camp-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--green-deep);
+    line-height: 1.3;
+  }
+  .camp-desc {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    line-height: 1.65;
+    font-weight: 300;
+    flex: 1;
+  }
+  .camp-info {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--border);
+  }
+  .info-chip {
+    background: var(--green-pale);
+    color: var(--green-deep);
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 50px;
+  }
+  .camp-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 0.4rem;
+  }
+  .camp-price {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--blue-mid);
+  }
+  .camp-price small { font-size: 0.7rem; font-weight: 400; color: var(--text-light); }
+
+  /* ─── WHY US ─── */
+  #why {
+    background: var(--green-deep);
+    position: relative;
+    overflow: hidden;
+  }
+  #why::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  #why .section-title { color: var(--white); }
+  #why .section-sub { color: rgba(255,255,255,0.6); }
+  #why .section-label { color: #6ee9a4; }
+  #why .section-label::before { background: #6ee9a4; }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+    position: relative;
+  }
+  .feature-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 1.8rem 1.5rem;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .feature-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-4px); }
+  .feature-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  .feature-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+  .feature-text { font-size: 0.875rem; color: rgba(255,255,255,0.55); line-height: 1.65; font-weight: 300; }
+
+  /* ─── DESTINATIONS ─── */
+  #destinations { background: var(--white); }
+  .dest-scroll {
+    display: flex; gap: 1.2rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    scrollbar-width: none;
+  }
+  .dest-scroll::-webkit-scrollbar { display: none; }
+  .dest-card {
+    flex: 0 0 200px;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    height: 280px;
+    cursor: pointer;
+    transition: transform 0.25s;
+  }
+  .dest-card:hover { transform: scale(1.03); }
+  .dest-bg {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.4s;
+  }
+  .dest-card:hover .dest-bg { transform: scale(1.07); }
+  .dest-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(13,74,46,0.9) 0%, transparent 55%);
+  }
+  .dest-info {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 1rem;
+  }
+  .dest-name {
+    font-family: 'Playfair Display', serif;
+    color: var(--white);
+    font-size: 1.05rem;
+    margin-bottom: 4px;
+  }
+  .dest-count { font-size: 0.75rem; color: #a7f3c6; font-weight: 500; }
+
+  /* ─── TESTIMONIALS ─── */
+  #testimonials { background: var(--cream); }
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .testi-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .stars { color: #f59e0b; font-size: 0.95rem; margin-bottom: 0.8rem; }
+  .testi-text {
+    font-size: 0.95rem;
+    color: var(--text-mid);
+    line-height: 1.7;
+    font-style: italic;
+    margin-bottom: 1.2rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+  }
+  .testi-author {
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--green-pale);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--green-deep);
+  }
+  .author-name { font-size: 0.875rem; font-weight: 600; color: var(--green-deep); }
+  .author-meta { font-size: 0.75rem; color: var(--text-light); }
+
+  /* ─── CONTACT / BOOK CTA ─── */
+  #contact {
+    background: linear-gradient(135deg, var(--blue-deep) 0%, var(--green-deep) 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #contact::before {
+    content:'';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: rgba(110,233,164,0.06);
+    border-radius: 50%;
+    top: -200px; right: -100px;
+  }
+  #contact .section-title { color: var(--white); }
+  #contact .section-sub { color: rgba(255,255,255,0.65); max-width: 440px; margin: 0 auto 2.5rem; }
+  #contact .section-label { color: #90caf9; }
+  #contact .section-label::before { background: #90caf9; }
+  .contact-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  .form-field {
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .form-field.full { grid-column: 1 / -1; }
+  .form-field label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .form-field input::placeholder,
+  .form-field textarea::placeholder { color: rgba(255,255,255,0.4); }
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus {
+    border-color: #6ee9a4;
+    background: rgba(255,255,255,0.15);
+  }
+  .form-field select option { background: var(--green-deep); }
+  .form-field textarea { resize: vertical; min-height: 100px; }
+  .submit-btn {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 1rem;
+    background: #6ee9a4;
+    color: var(--green-deep);
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .submit-btn:hover { background: #4dd68a; transform: translateY(-2px); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--text-dark);
+    padding: 3rem 5% 2rem;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .footer-brand .logo { font-size: 1.3rem; display: block; margin-bottom: 0.8rem; }
+  .footer-brand p {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.6;
+    font-weight: 300;
+    max-width: 220px;
+  }
+  .footer-col h4 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 1rem;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 0.6rem; }
+  .footer-col ul a {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-col ul a:hover { color: #6ee9a4; }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-bottom p {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.3);
+  }
+  .social-links { display: flex; gap: 0.75rem; }
+  .social-link {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .social-link:hover { border-color: #6ee9a4; color: #6ee9a4; }
+
+  /* ─── MODAL ─── */
+  .modal-bg {
+    display: none;
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(10,30,20,0.7);
+    backdrop-filter: blur(4px);
+    align-items: center; justify-content: center;
+    padding: 2rem;
+  }
+  .modal-bg.open { display: flex; }
+  .modal {
+    background: var(--white);
+    border-radius: 20px;
+    max-width: 520px; width: 100%;
+    padding: 2rem;
+    position: relative;
+    max-height: 90vh; overflow-y: auto;
+    animation: slideUp 0.25s ease;
+  }
+  @keyframes slideUp { from { transform: translateY(30px); opacity:0; } to { transform: translateY(0); opacity:1; } }
+  .modal-close {
+    position: absolute; top: 1.2rem; right: 1.2rem;
+    background: var(--cream);
+    border: none; border-radius: 50%;
+    width: 32px; height: 32px;
+    cursor: pointer; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-mid);
+  }
+  .modal h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--green-deep);
+    margin-bottom: 0.3rem;
+  }
+  .modal p { font-size: 0.875rem; color: var(--text-light); margin-bottom: 1.5rem; }
+  .modal-form { display: flex; flex-direction: column; gap: 1rem; }
+  .modal-field { display: flex; flex-direction: column; gap: 6px; }
+  .modal-field label { font-size: 0.78rem; font-weight: 600; color: var(--text-mid); text-transform: uppercase; letter-spacing: 0.04em; }
+  .modal-field input, .modal-field select {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.7rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    outline: none;
+    transition: border-color 0.2s;
+    background: var(--cream);
+  }
+  .modal-field input:focus, .modal-field select:focus { border-color: var(--green-light); }
+
+  /* ─── SCROLL ANIMATION ─── */
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 700px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .contact-form { grid-template-columns: 1fr; }
+    .hero-stats { display: none; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Wander<span>Lust</span></div>
+  <ul class="nav-links">
+    <li><a href="#packages">Packages</a></li>
+    <li><a href="#govtcamps">Govt Camps</a></li>
+    <li><a href="#destinations">Destinations</a></li>
+    <li><a href="#why">About</a></li>
+    <li><a href="#contact" class="nav-cta">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-badge">🌿 Certified Eco Travel Partner</div>
+  <h1 class="hero h1">Discover India's<br><em>Wild Heart</em></h1>
+  <p class="hero p">From misty Himalayan valleys to sun-drenched coastal jungles — curated government camp stays and luxury private tours that bring nature closer.</p>
+  <div class="hero-buttons">
+    <a href="#packages" class="btn-primary">Browse Packages ↓</a>
+    <a href="#govtcamps" class="btn-outline">Government Camps →</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><strong>240+</strong><span>Destinations covered</span></div>
+    <div class="stat"><strong>18k+</strong><span>Happy travellers</span></div>
+    <div class="stat"><strong>4.9★</strong><span>Average rating</span></div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section id="packages">
+  <div class="section-label">Tour Packages</div>
+  <h2 class="section-title">Handpicked Adventures</h2>
+  <p class="section-sub">Choose from government eco-stays or premium private itineraries — every package includes expert guides and responsible travel practices.</p>
+
+  <div class="tabs">
+    <button class="tab active" onclick="filterPackages('all', this)">All Packages</button>
+    <button class="tab" onclick="filterPackages('govt', this)">Government Tours</button>
+    <button class="tab" onclick="filterPackages('private', this)">Private Tours</button>
+    <button class="tab" onclick="filterPackages('adventure', this)">Adventure</button>
+    <button class="tab" onclick="filterPackages('wildlife', this)">Wildlife</button>
+  </div>
+
+  <div class="packages-grid">
+    <!-- Card 1 -->
+    <div class="pkg-card visible" data-cat="govt wildlife" onclick="openModal('Jim Corbett Eco Camp','7 Days / 6 Nights','₹ 12,500','Uttarakhand, India')">
+      <div class="pkg-img" style="background-image:url('https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?w=600')">
+        <div class="pkg-badge govt">Government Camp</div>
+        <div class="pkg-fav">🤍</div>
+      </div>
+      <div class="pkg-body">
+        <div class="pkg-location">Uttarakhand, India</div>
+        <div class="pkg-name">Jim Corbett Eco Camp</div>
+        <div class="pkg-meta">
+          <span>🗓 7 Days</span>
+          <span>🧑‍🤝‍🧑 4–12 people</span>
+          <span>⭐ 4.9</span>
+        </div>
+        <div class="pkg-price-row">
+          <div class="pkg-price">₹ 12,500 <small>/person</small></div>
+          <button class="btn-book">Book Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="pkg-card visible" data-cat="private adventure" onclick="openModal('Ladakh High Altitude Trek','10 Days / 9 Nights','₹ 34,999','Ladakh, J&K')">
+      <div class="pkg-img" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600')">
+        <div class="pkg-badge">Private Tour</div>
+        <div class="pkg-fav">🤍</div>
+      </div>
+      <div class="pkg-body">
+        <div class="pkg-location">Ladakh, J&K</div>
+        <div class="pkg-name">Ladakh High Altitude Trek</div>
+        <div class="pkg-meta">
+          <span>🗓 10 Days</span>
+          <span>🧑‍🤝‍🧑 2–8 people</span>
+          <span>⭐ 4.8</span>
+        </div>
+        <div class="pkg-price-row">
+          <div class="pkg-price">₹ 34,999 <small>/person</small></div>
+          <button class="btn-book">Book Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="pkg-card visible" data-cat="govt wildlife" onclick="openModal('Sundarbans Mangrove Safari','5 Days / 4 Nights','₹ 9,800','West Bengal')">
+      <div class="pkg-img" style="background-image:url('https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=600')">
+        <div class="pkg-badge govt">Government Camp</div>
+        <div class="pkg-fav">🤍</div>
+      </div>
+      <div class="pkg-body">
+        <div class="pkg-location">West Bengal</div>
+        <div class="pkg-name">Sundarbans Mangrove Safari</div>
+        <div class="pkg-meta">
+          <span>🗓 5 Days</span>
+          <span>🧑‍🤝‍🧑 6–20 people</span>
+          <span>⭐ 4.7</span>
+        </div>
+        <div class="pkg-price-row">
+          <div class="pkg-price">₹ 9,800 <small>/person</small></div>
+          <button class="btn-book">Book Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="pkg-card visible" data-cat="private adventure" onclick="openModal('Coorg Coffee Trails Luxury','4 Days / 3 Nights','₹ 22,500','Coorg, Karnataka')">
+      <div class="pkg-img" style="background-image:url('https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=600')">
+        <div class="pkg-badge">Private Tour</div>
+        <div class="pkg-fav">🤍</div>
+      </div>
+      <div class="pkg-body">
+        <div class="pkg-location">Coorg, Karnataka</div>
+        <div class="pkg-name">Coorg Coffee Trails Luxury</div>
+        <div class="pkg-meta">
+          <span>🗓 4 Days</span>
+          <span>🧑‍🤝‍🧑 2–6 people</span>
+          <span>⭐ 4.9</span>
+        </div>
+        <div class="pkg-price-row">
+          <div class="pkg-price">₹ 22,500 <small>/person</small></div>
+          <button class="btn-book">Book Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="pkg-card visible" data-cat="govt adventure" onclick="openModal('Valley of Flowers Trek','6 Days / 5 Nights','₹ 8,200','Uttarakhand')">
+      <div class="pkg-img" style="background-image:url('https://images.unsplash.com/photo-1544698379-5d4b1b9e80bc?w=600')">
+        <div class="pkg-badge govt">Government Camp</div>
+        <div class="pkg-fav">🤍</div>
+      </div>
+      <div class="pkg-body">
+        <div class="pkg-location">Uttarakhand</div>
+        <div class="pkg-name">Valley of Flowers Trek</div>
+        <div class="pkg-meta">
+          <span>🗓 6 Days</span>
+          <span>🧑‍🤝‍🧑 4–15 people</span>
+          <span>⭐ 4.8</span>
+        </div>
+        <div class="pkg-price-row">
+          <div class="pkg-price">₹ 8,200 <small>/person</small></div>
+          <button class="btn-book">Book Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="pkg-card visible" data-cat="private wildlife" onclick="openModal('Ranthambore Tiger Reserve','3 Days / 2 Nights','₹ 19,900','Rajasthan')">
+      <div class="pkg-img" style="background-image:url('https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=600')">
+        <div class="pkg-badge">Private Tour</div>
+        <div class="pkg-fav">🤍</div>
+      </div>
+      <div class="pkg-body">
+        <div class="pkg-location">Rajasthan</div>
+        <div class="pkg-name">Ranthambore Tiger Reserve</div>
+        <div class="pkg-meta">
+          <span>🗓 3 Days</span>
+          <span>🧑‍🤝‍🧑 2–6 people</span>
+          <span>⭐ 4.9</span>
+        </div>
+        <div class="pkg-price-row">
+          <div class="pkg-price">₹ 19,900 <small>/person</small></div>
+          <button class="btn-book">Book Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GOVT CAMPS -->
+<section id="govtcamps">
+  <div class="section-label">Government Certified</div>
+  <h2 class="section-title">Eco Camp Information</h2>
+  <p class="section-sub">Forest Department & Tourism Board certified camps with basic to comfortable facilities. Subsidised pricing, responsible tourism, authentic wilderness.</p>
+
+  <div class="camps-grid">
+    <div class="camp-card fade-in">
+      <div class="camp-icon">🏕️</div>
+      <div class="camp-tag">Forest Dept. Certified</div>
+      <div class="camp-name">Periyar Tiger Reserve Camp</div>
+      <div class="camp-desc">Located in Kerala's most biodiverse reserve. Includes bamboo hut accommodation, guided forest walks, and wildlife observation decks overlooking the lake.</div>
+      <div class="camp-info">
+        <span class="info-chip">Kerala</span>
+        <span class="info-chip">Oct – Mar</span>
+        <span class="info-chip">Max 30 guests</span>
+        <span class="info-chip">Meals included</span>
+      </div>
+      <div class="camp-footer">
+        <div class="camp-price">₹ 2,800 <small>/night/person</small></div>
+        <button class="btn-book" onclick="openModal('Periyar Tiger Reserve Camp','2–7 Nights','₹ 2,800/night','Kerala')">Enquire</button>
+      </div>
+    </div>
+
+    <div class="camp-card fade-in">
+      <div class="camp-icon">⛺</div>
+      <div class="camp-tag">Tourism Board Camp</div>
+      <div class="camp-name">Kaziranga Rhino Camp</div>
+      <div class="camp-desc">UNESCO heritage zone camp in Assam. Jeep safaris, elephant-back morning tours, and birdwatching on the Brahmaputra floodplains. Certified naturalists on-site.</div>
+      <div class="camp-info">
+        <span class="info-chip">Assam</span>
+        <span class="info-chip">Nov – Apr</span>
+        <span class="info-chip">Max 24 guests</span>
+        <span class="info-chip">Safari included</span>
+      </div>
+      <div class="camp-footer">
+        <div class="camp-price">₹ 3,200 <small>/night/person</small></div>
+        <button class="btn-book" onclick="openModal('Kaziranga Rhino Camp','2–5 Nights','₹ 3,200/night','Assam')">Enquire</button>
+      </div>
+    </div>
+
+    <div class="camp-card fade-in">
+      <div class="camp-icon">🌊</div>
+      <div class="camp-tag">Marine Dept. Camp</div>
+      <div class="camp-name">Andaman Coral Reef Camp</div>
+      <div class="camp-desc">Exclusive coastal camp on Havelock Island. Snorkelling, scuba intro sessions, turtle nesting walks at night. Eco-friendly tents, solar powered.</div>
+      <div class="camp-info">
+        <span class="info-chip">Andaman</span>
+        <span class="info-chip">Oct – May</span>
+        <span class="info-chip">Max 20 guests</span>
+        <span class="info-chip">Equipment provided</span>
+      </div>
+      <div class="camp-footer">
+        <div class="camp-price">₹ 4,500 <small>/night/person</small></div>
+        <button class="btn-book" onclick="openModal('Andaman Coral Reef Camp','3–7 Nights','₹ 4,500/night','Andaman Islands')">Enquire</button>
+      </div>
+    </div>
+
+    <div class="camp-card fade-in">
+      <div class="camp-icon">🏔️</div>
+      <div class="camp-tag">Himalayan Dept. Camp</div>
+      <div class="camp-name">Spiti Valley High Camp</div>
+      <div class="camp-desc">At 4,200m altitude in cold desert terrain. Monastery visits, Himalayan stargazing, local homestay culture. Acclimatisation days built into every package.</div>
+      <div class="camp-info">
+        <span class="info-chip">Himachal Pradesh</span>
+        <span class="info-chip">Jun – Sep</span>
+        <span class="info-chip">Max 16 guests</span>
+        <span class="info-chip">All gear provided</span>
+      </div>
+      <div class="camp-footer">
+        <div class="camp-price">₹ 3,600 <small>/night/person</small></div>
+        <button class="btn-book" onclick="openModal('Spiti Valley High Camp','5–10 Nights','₹ 3,600/night','Himachal Pradesh')">Enquire</button>
+      </div>
+    </div>
+
+    <div class="camp-card fade-in">
+      <div class="camp-icon">🌿</div>
+      <div class="camp-tag">Forest Dept. Certified</div>
+      <div class="camp-name">Bandipur Forest Retreat</div>
+      <div class="camp-desc">Karnataka's flagship eco-camp inside Bandipur Tiger Reserve. Morning jeep safaris, nature photography walks, bonfire evenings with forest storytelling.</div>
+      <div class="camp-info">
+        <span class="info-chip">Karnataka</span>
+        <span class="info-chip">Year-round</span>
+        <span class="info-chip">Max 28 guests</span>
+        <span class="info-chip">Photography tours</span>
+      </div>
+      <div class="camp-footer">
+        <div class="camp-price">₹ 2,600 <small>/night/person</small></div>
+        <button class="btn-book" onclick="openModal('Bandipur Forest Retreat','2–6 Nights','₹ 2,600/night','Karnataka')">Enquire</button>
+      </div>
+    </div>
+
+    <div class="camp-card fade-in">
+      <div class="camp-icon">🦅</div>
+      <div class="camp-tag">Wildlife Dept. Camp</div>
+      <div class="camp-name">Keoladeo Bird Sanctuary Stay</div>
+      <div class="camp-desc">UNESCO Ramsar Wetland site in Bharatpur. 390+ bird species including Siberian cranes. Cycle tours, birding walks with ornithologists, open-air dining.</div>
+      <div class="camp-info">
+        <span class="info-chip">Rajasthan</span>
+        <span class="info-chip">Oct – Mar</span>
+        <span class="info-chip">Max 40 guests</span>
+        <span class="info-chip">Binoculars provided</span>
+      </div>
+      <div class="camp-footer">
+        <div class="camp-price">₹ 1,900 <small>/night/person</small></div>
+        <button class="btn-book" onclick="openModal('Keoladeo Bird Sanctuary Stay','2–4 Nights','₹ 1,900/night','Rajasthan')">Enquire</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="section-label">Why WanderLust</div>
+  <h2 class="section-title">Travel with confidence</h2>
+  <p class="section-sub">We've partnered with Forest Departments, Tourism Boards, and certified private operators to give you transparent, safe, and unforgettable journeys.</p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🌿</div>
+      <div class="feature-title">Eco-Certified</div>
+      <div class="feature-text">All our camps and tours comply with government eco-tourism standards and Leave No Trace principles.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🛡️</div>
+      <div class="feature-title">100% Secure Booking</div>
+      <div class="feature-text">Payments are encrypted and protected. Cancel up to 72 hours before for a full refund.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧭</div>
+      <div class="feature-title">Expert Local Guides</div>
+      <div class="feature-text">Every trip is led by certified naturalists and local guides with 5+ years of field experience.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📋</div>
+      <div class="feature-title">Govt. Permits Handled</div>
+      <div class="feature-text">We manage all forest entry permits, wildlife zone passes, and restricted area documentation.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🏥</div>
+      <div class="feature-title">24/7 Field Support</div>
+      <div class="feature-text">Satellite phones and trained first-aid personnel on every camp. Your safety is our first priority.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🤝</div>
+      <div class="feature-title">Community Impact</div>
+      <div class="feature-text">30% of every booking goes directly to local tribal and rural communities near the destinations.</div>
+    </div>
+  </div>
+</section>
+
+<!-- DESTINATIONS -->
+<section id="destinations">
+  <div class="section-label">Popular Destinations</div>
+  <h2 class="section-title">Where will you go?</h2>
+  <p class="section-sub">Explore our most booked regions. Scroll to discover all 20+ destinations we operate in.</p>
+
+  <div class="dest-scroll">
+    <div class="dest-card">
+      <div class="dest-bg" style="background-image:url('https://images.unsplash.com/photo-1590073242678-70ee3fc28f8e?w=400')"></div>
+      <div class="dest-overlay"></div>
+      <div class="dest-info">
+        <div class="dest-name">Kerala</div>
+        <div class="dest-count">12 packages</div>
+      </div>
+    </div>
+    <div class="dest-card">
+      <div class="dest-bg" style="background-image:url('https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=400')"></div>
+      <div class="dest-overlay"></div>
+      <div class="dest-info">
+        <div class="dest-name">Ladakh</div>
+        <div class="dest-count">8 packages</div>
+      </div>
+    </div>
+    <div class="dest-card">
+      <div class="dest-bg" style="background-image:url('https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400')"></div>
+      <div class="dest-overlay"></div>
+      <div class="dest-info">
+        <div class="dest-name">Rajasthan</div>
+        <div class="dest-count">15 packages</div>
+      </div>
+    </div>
+    <div class="dest-card">
+      <div class="dest-bg" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400')"></div>
+      <div class="dest-overlay"></div>
+      <div class="dest-info">
+        <div class="dest-name">Himachal</div>
+        <div class="dest-count">10 packages</div>
+      </div>
+    </div>
+    <div class="dest-card">
+      <div class="dest-bg" style="background-image:url('https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=400')"></div>
+      <div class="dest-overlay"></div>
+      <div class="dest-info">
+        <div class="dest-name">Andaman</div>
+        <div class="dest-count">6 packages</div>
+      </div>
+    </div>
+    <div class="dest-card">
+      <div class="dest-bg" style="background-image:url('https://images.unsplash.com/photo-1544698379-5d4b1b9e80bc?w=400')"></div>
+      <div class="dest-overlay"></div>
+      <div class="dest-info">
+        <div class="dest-name">Uttarakhand</div>
+        <div class="dest-count">14 packages</div>
+      </div>
+    </div>
+    <div class="dest-card">
+      <div class="dest-bg" style="background-image:url('https://images.unsplash.com/photo-1602491453631-e2a5ad90a131?w=400')"></div>
+      <div class="dest-overlay"></div>
+      <div class="dest-info">
+        <div class="dest-name">Karnataka</div>
+        <div class="dest-count">9 packages</div>
+      </div>
+    </div>
+    <div class="dest-card">
+      <div class="dest-bg" style="background-image:url('https://images.unsplash.com/photo-1534693263590-b17e5ec27df2?w=400')"></div>
+      <div class="dest-overlay"></div>
+      <div class="dest-info">
+        <div class="dest-name">Assam</div>
+        <div class="dest-count">7 packages</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-label">Traveller Stories</div>
+  <h2 class="section-title">Real reviews, real journeys</h2>
+  <p class="section-sub">Over 18,000 travellers have trusted WanderLust. Here's what a few of them said.</p>
+
+  <div class="testi-grid">
+    <div class="testi-card fade-in">
+      <div class="stars">★★★★★</div>
+      <div class="testi-text">"The Jim Corbett Government Camp was beyond anything I imagined. Woke up at 5am to hear tigers call. Our naturalist guide was exceptional — knowledgeable and passionate."</div>
+      <div class="testi-author">
+        <div class="avatar">RS</div>
+        <div>
+          <div class="author-name">Ravi Sharma</div>
+          <div class="author-meta">Jim Corbett Camp · Dec 2024</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card fade-in">
+      <div class="stars">★★★★★</div>
+      <div class="testi-text">"Ladakh Trek was the hardest and most beautiful thing I've ever done. WanderLust handled every permit and altitude concern. Felt completely safe at 5,000m."</div>
+      <div class="testi-author">
+        <div class="avatar">PM</div>
+        <div>
+          <div class="author-name">Priya Mehta</div>
+          <div class="author-meta">Ladakh Trek · Aug 2024</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card fade-in">
+      <div class="stars">★★★★☆</div>
+      <div class="testi-text">"Sundarbans was hauntingly beautiful. Seeing a Royal Bengal Tiger from the boat — something I'll tell my grandchildren. Booking process was seamless and transparent."</div>
+      <div class="testi-author">
+        <div class="avatar">AK</div>
+        <div>
+          <div class="author-name">Anjali Krishnan</div>
+          <div class="author-meta">Sundarbans Safari · Feb 2025</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Book Your Journey</div>
+  <h2 class="section-title">Ready to Explore?</h2>
+  <p class="section-sub">Fill in your preferences and our travel experts will craft a personalised itinerary within 24 hours.</p>
+
+  <form class="contact-form" onsubmit="handleSubmit(event)">
+    <div class="form-field">
+      <label>Full Name</label>
+      <input type="text" placeholder="Your name" required>
+    </div>
+    <div class="form-field">
+      <label>Phone / WhatsApp</label>
+      <input type="tel" placeholder="+91 98765 43210" required>
+    </div>
+    <div class="form-field">
+      <label>Email Address</label>
+      <input type="email" placeholder="you@email.com">
+    </div>
+    <div class="form-field">
+      <label>Number of Travellers</label>
+      <input type="number" min="1" max="50" placeholder="2">
+    </div>
+    <div class="form-field full">
+      <label>Preferred Destination</label>
+      <select>
+        <option value="">Select destination…</option>
+        <option>Kerala</option>
+        <option>Ladakh</option>
+        <option>Uttarakhand</option>
+        <option>Rajasthan</option>
+        <option>Andaman Islands</option>
+        <option>Himachal Pradesh</option>
+        <option>Assam / Kaziranga</option>
+        <option>Karnataka</option>
+        <option>West Bengal / Sundarbans</option>
+        <option>Not sure — help me choose!</option>
+      </select>
+    </div>
+    <div class="form-field full">
+      <label>Tour Type</label>
+      <select>
+        <option value="">Select type…</option>
+        <option>Government Eco Camp</option>
+        <option>Private Luxury Tour</option>
+        <option>Adventure Trekking</option>
+        <option>Wildlife Safari</option>
+        <option>Beach / Marine</option>
+        <option>Cultural & Heritage</option>
+      </select>
+    </div>
+    <div class="form-field full">
+      <label>Message (optional)</label>
+      <textarea placeholder="Any specific interests, accessibility needs, or questions?"></textarea>
+    </div>
+    <button type="submit" class="submit-btn">Send Enquiry →</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">Wander<span>Lust</span></span>
+      <p>India's most trusted eco-tourism platform. Connecting adventurers with nature responsibly since 2015.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Packages</h4>
+      <ul>
+        <li><a href="#">Government Camps</a></li>
+        <li><a href="#">Private Tours</a></li>
+        <li><a href="#">Adventure Treks</a></li>
+        <li><a href="#">Wildlife Safaris</a></li>
+        <li><a href="#">Beach Getaways</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Destinations</h4>
+      <ul>
+        <li><a href="#">Kerala</a></li>
+        <li><a href="#">Ladakh</a></li>
+        <li><a href="#">Rajasthan</a></li>
+        <li><a href="#">Himachal Pradesh</a></li>
+        <li><a href="#">Andaman Islands</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Sustainability</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 WanderLust Travel. All rights reserved. | Registered with Ministry of Tourism, Govt. of India</p>
+    <div class="social-links">
+      <a href="#" class="social-link">in</a>
+      <a href="#" class="social-link">tw</a>
+      <a href="#" class="social-link">ig</a>
+      <a href="#" class="social-link">yt</a>
+    </div>
+  </div>
+</footer>
+
+<!-- BOOKING MODAL -->
+<div class="modal-bg" id="modal" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('modal').classList.remove('open')">✕</button>
+    <h2 id="modal-title">Book Package</h2>
+    <p id="modal-desc">Fill in your details to reserve your spot</p>
+    <form class="modal-form" onsubmit="handleModalSubmit(event)">
+      <div class="modal-field">
+        <label>Full Name</label>
+        <input type="text" placeholder="Your name" required>
+      </div>
+      <div class="modal-field">
+        <label>Phone</label>
+        <input type="tel" placeholder="+91 9876543210" required>
+      </div>
+      <div class="modal-field">
+        <label>Email</label>
+        <input type="email" placeholder="you@email.com">
+      </div>
+      <div class="modal-field">
+        <label>Preferred Travel Date</label>
+        <input type="date">
+      </div>
+      <div class="modal-field">
+        <label>Number of Travellers</label>
+        <input type="number" min="1" max="50" value="2">
+      </div>
+      <div class="modal-field">
+        <label>Special Requirements</label>
+        <select>
+          <option>None</option>
+          <option>Vegetarian meals</option>
+          <option>Accessibility support</option>
+          <option>Child-friendly activities</option>
+          <option>Photography focus</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-primary" style="width:100%;justify-content:center;border-radius:50px;margin-top:0.5rem;">Confirm Enquiry →</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Filter packages
+  function filterPackages(cat, btn) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.pkg-card').forEach(card => {
+      if (cat === 'all' || card.dataset.cat.includes(cat)) {
+        card.classList.add('visible');
+      } else {
+        card.classList.remove('visible');
+      }
+    });
+  }
+
+  // Modal
+  function openModal(title, duration, price, location) {
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-desc').textContent = `${duration} · ${price}/person · ${location}`;
+    document.getElementById('modal').classList.add('open');
+  }
+  function closeModal(e) {
+    if (e.target === document.getElementById('modal')) {
+      document.getElementById('modal').classList.remove('open');
+    }
+  }
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    alert('✅ Thank you! Our travel expert will contact you within 24 hours with your personalised itinerary.');
+  }
+  function handleModalSubmit(e) {
+    e.preventDefault();
+    document.getElementById('modal').classList.remove('open');
+    alert('🎉 Booking enquiry submitted! We\'ll confirm your slot and share a detailed quote shortly.');
+  }
+
+  // Scroll animations
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Heart toggle on cards
+  document.querySelectorAll('.pkg-fav').forEach(fav => {
+    fav.addEventListener('click', e => {
+      e.stopPropagation();
+      fav.textContent = fav.textContent === '🤍' ? '❤️' : '🤍';
+    });
+  });
+</script>
+</body>
+</html>
